@@ -41,12 +41,6 @@ namespace App1
                 presenter.IsMinimizable = false;
             }
 
-            //TestCommands();
-
-            //code to set the window icon
-            IntPtr hWnd = WindowNative.GetWindowHandle(this);
-            AppWindow appWindow = AppWindow.GetFromWindowId(Win32Interop.GetWindowIdFromWindow(hWnd));
-            appWindow.SetIcon("Assets\\run11icon.ico");
         }
 
         String selectedCommand = "";
@@ -249,6 +243,10 @@ namespace App1
         private void Grid_Loaded(object sender, RoutedEventArgs e)
         {
             AutoSuggestBox1.Focus(FocusState.Programmatic);
+            //code to set the window icon
+            IntPtr hWnd = WindowNative.GetWindowHandle(this);
+            AppWindow appWindow = AppWindow.GetFromWindowId(Win32Interop.GetWindowIdFromWindow(hWnd));
+            appWindow.SetIcon("Assets\\run11icon.ico");
         }
     }
 }
