@@ -1,3 +1,4 @@
+using Microsoft.UI;
 using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
@@ -16,6 +17,7 @@ using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.System;
 using Windows.UI.Popups;
+using WinRT.Interop;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -38,8 +40,13 @@ namespace App1
                 presenter.IsMaximizable = false;
                 presenter.IsMinimizable = false;
             }
-            
+
             //TestCommands();
+
+            //code to set the window icon
+            IntPtr hWnd = WindowNative.GetWindowHandle(this);
+            AppWindow appWindow = AppWindow.GetFromWindowId(Win32Interop.GetWindowIdFromWindow(hWnd));
+            appWindow.SetIcon("Assets\\run11icon.ico");
         }
 
         String selectedCommand = "";
