@@ -126,7 +126,7 @@ QuickRun modernizes this experience while preserving its original philosophy:
 - Familiar
 - Lightweight
 
-Unlike feature-heavy launchers, Run11 focuses on doing a few things exceptionally well.
+Unlike feature-heavy launchers, QuickRun focuses on doing a few things exceptionally well.
 
 ## Screenshots
 
@@ -147,15 +147,15 @@ docs/images/screenshot1.png
 ### Build
 
 ```bash
-git clone https://github.com/TUO-NOME/Run11.git
-cd Run11
+git clone https://github.com/GiosuOffice/QuickRun.git
+cd QuickRun
 ```
 
 Open the solution in Visual Studio and build the project.
 
 ## Technology
 
-Run11 is built using:
+QuickRun is built using:
 
 - C#
 - .NET 8
@@ -173,7 +173,7 @@ Run11 is built using:
 - [ ] Command history
 - [ ] Installed applications discovery
 - [ ] Favorites
-- [ ] URL support
+- [x] URL support (pre alpha)
 - [ ] Search integration
 - [ ] Global hotkey
 - [ ] Plugin support
