@@ -11,7 +11,7 @@
   <Identity
     Name="ff17d916-8a54-4bf1-990c-069bbc31b29a"
     Publisher="CN=Giosuè Giordano"
-    Version="0.5.2.0" />
+    Version="0.7.2.0" />
 
   <mp:PhoneIdentity PhoneProductId="ff17d916-8a54-4bf1-990c-069bbc31b29a" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 

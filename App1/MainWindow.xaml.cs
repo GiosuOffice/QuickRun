@@ -9,6 +9,7 @@ using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Navigation;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -48,29 +49,8 @@ namespace App1
         private void Run_Button_Click(object sender, RoutedEventArgs e)
         {
             Debug.WriteLine(selectedCommand);
-            if (string.IsNullOrWhiteSpace(selectedCommand))
-            {
-                ShowPopupOffsetClicked(sender, e);
-                try
-                {
-                    string command = Environment.ExpandEnvironmentVariables(AutoSuggestBox1.Text.Trim());
-
-                    Process.Start(new ProcessStartInfo
-                    {
-                        FileName = command,
-                        UseShellExecute = true
-                    });
-
-                    Close();
-                }
-                catch (Exception ex)
-                {
-                    //Debug.WriteLine(ex.Message);
-                    ShowPopupOffsetClicked(sender, e);
-                }
-            }
-
             ExecuteCommand();
+
         }
 
         // List of commands
@@ -139,7 +119,7 @@ namespace App1
         // Handle user selecting an item, in our case just output the selected item.
         private void AutoSuggestBox_SuggestionChosen(AutoSuggestBox sender, AutoSuggestBoxSuggestionChosenEventArgs args)
         {
-            selectedCommand = AutoSuggestBox1.Text.ToString();
+            selectedCommand = args.SelectedItem.ToString();
             Debug.WriteLine(AutoSuggestBox1.Text.ToString());
             
         }
@@ -174,24 +154,57 @@ namespace App1
 
         private void ExecuteCommand()
         {
-            try
+            if (IsMathExpression(selectedCommand))
             {
-                string command = Environment.ExpandEnvironmentVariables(AutoSuggestBox1.Text.Trim());
-
-                Process.Start(new ProcessStartInfo
+                try
                 {
-                    FileName = command,
-                    UseShellExecute = true
-                });
-
-                Close();
+                    var result = new DataTable().Compute(selectedCommand, null);
+                    AutoSuggestBox1.Text = result.ToString();
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine(ex.Message);
+                    //ShowPopupOffsetClicked(null, null);
+                }
             }
-            catch (Exception ex)
+            else
             {
-                Debug.WriteLine(ex.Message);
-                ShowPopupOffsetClicked(null, null);
+                try
+                {
+                    string input = Environment.ExpandEnvironmentVariables(AutoSuggestBox1.Text.Trim());
+
+                    int firstSpace = input.IndexOf(' ');
+
+                    string fileName;
+                    string arguments;
+
+                    if (firstSpace == -1)
+                    {
+                        fileName = input;
+                        arguments = "";
+                    }
+                    else
+                    {
+                        fileName = input.Substring(0, firstSpace);
+                        arguments = input.Substring(firstSpace + 1);
+                    }
+
+                    Process.Start(new ProcessStartInfo
+                    {
+                        FileName = fileName,
+                        Arguments = arguments,
+                        UseShellExecute = true
+                    });
+
+                    Close();
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine(ex.Message);
+                    ShowPopupOffsetClicked(null, null);
+                }
             }
-        }  
+        }
         
 
         private void AutoSuggestBox1_QuerySubmitted(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args)
@@ -248,5 +261,12 @@ namespace App1
             AppWindow appWindow = AppWindow.GetFromWindowId(Win32Interop.GetWindowIdFromWindow(hWnd));
             appWindow.SetIcon("Assets\\run11icon.ico");
         }
+
+        private bool IsMathExpression(string input)
+        {
+            return input.Any(char.IsDigit) &&
+                   input.Any(c => "+-*/()".Contains(c));
+        }
     }
+
 }
