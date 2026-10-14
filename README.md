@@ -130,7 +130,7 @@ Unlike feature-heavy launchers, QuickRun focuses on doing a few things exception
 
 ## Screenshots
 
-docs//screenshot.png
+App1/docs/screenshot.png
 
 
 ## Building
