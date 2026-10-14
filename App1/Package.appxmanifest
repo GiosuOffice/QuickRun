@@ -11,12 +11,12 @@
   <Identity
     Name="ff17d916-8a54-4bf1-990c-069bbc31b29a"
     Publisher="CN=Giosuè Giordano"
-    Version="0.7.2.0" />
+    Version="0.7.4.1014" />
 
   <mp:PhoneIdentity PhoneProductId="ff17d916-8a54-4bf1-990c-069bbc31b29a" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
   <Properties>
-    <DisplayName>Run11</DisplayName>
+    <DisplayName>QuickRun</DisplayName>
     <PublisherDisplayName>Giosuè Giordano</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
@@ -35,11 +35,10 @@
       Executable="$targetnametoken$.exe"
       EntryPoint="$targetentrypoint$">
       <uap:VisualElements
-        DisplayName="Run11"
-        Description="Run11 is the classic Win+R function with an all new design based on WinUI3"
-        BackgroundColor="transparent"
-        Square150x150Logo="Assets\Square150x150Logo.png" Square44x44Logo="Assets\Run11 Logo.png">
-        <uap:DefaultTile Wide310x150Logo="Assets\Wide310x150Logo.png"  ShortName="Run11" Square71x71Logo="Assets\SmallTile.png" Square310x310Logo="Assets\LargeTile.png">
+        DisplayName="QuickRun"
+        Description="QuickRun is the classic Win+R function with an all new design based on WinUI3"
+        BackgroundColor="transparent" Square150x150Logo="Assets\Square150x150Logo.png" Square44x44Logo="Assets\QuickRun Logo.png">
+        <uap:DefaultTile ShortName="QuickRun"  Square71x71Logo="Assets\SmallTile.png" Wide310x150Logo="Assets\Wide310x150Logo.png" Square310x310Logo="Assets\LargeTile.png">
           <uap:ShowNameOnTiles>
             <uap:ShowOn Tile="square150x150Logo"/>
             <uap:ShowOn Tile="wide310x150Logo"/>
@@ -47,7 +46,7 @@
         </uap:DefaultTile >
         <uap:InitialRotationPreference>
           <uap:Rotation Preference="landscape"/></uap:InitialRotationPreference>
-        <uap:LockScreen BadgeLogo="Assets\BadgeLogo.png" Notification="badgeAndTileText"/>
+        <uap:LockScreen Notification="badgeAndTileText" BadgeLogo="Assets\BadgeLogo.png"/>
         <uap:SplashScreen Image="Assets\SplashScreen.png"/>
       </uap:VisualElements>
     </Application>

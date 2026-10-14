@@ -33,8 +33,9 @@ namespace App1
         public MainWindow()
         {
             InitializeComponent();
-            AppWindow.Resize(new Windows.Graphics.SizeInt32(400, 200));
-            
+            AppWindow.Resize(new Windows.Graphics.SizeInt32(400, 210));
+            PositionWindow();
+
             if (AppWindow.Presenter is OverlappedPresenter presenter)
             {
                 presenter.IsResizable = false;
@@ -259,13 +260,33 @@ namespace App1
             //code to set the window icon
             IntPtr hWnd = WindowNative.GetWindowHandle(this);
             AppWindow appWindow = AppWindow.GetFromWindowId(Win32Interop.GetWindowIdFromWindow(hWnd));
-            appWindow.SetIcon("Assets\\run11icon.ico");
+            appWindow.SetIcon("Assets\\QuickRun.ico");
         }
 
         private bool IsMathExpression(string input)
         {
             return input.Any(char.IsDigit) &&
                    input.Any(c => "+-*/()".Contains(c));
+        }
+
+        private void PositionWindow()
+        {
+            IntPtr hWnd = WindowNative.GetWindowHandle(this);
+
+            AppWindow appWindow =
+                AppWindow.GetFromWindowId(
+                    Win32Interop.GetWindowIdFromWindow(hWnd));
+
+            var displayArea = DisplayArea.GetFromWindowId(
+                appWindow.Id,
+                DisplayAreaFallback.Primary);
+
+            int x = 10;
+
+            int y = displayArea.WorkArea.Height -
+                    appWindow.Size.Height - 10;
+
+            appWindow.Move(new Windows.Graphics.PointInt32(x, y));
         }
     }
 
