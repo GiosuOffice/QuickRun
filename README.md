@@ -1,4 +1,4 @@
-# Run11
+# QuickRun
 
 A modern reimagining of the classic Windows Run dialog.
 
@@ -9,7 +9,7 @@ Run11 brings the familiar Windows "Run" experience into the Windows 11 era with 
 
 ## Overview
 
-Run11 is a lightweight launcher inspired by the classic Windows Run dialog (`Win + R`).
+QuickRun is a lightweight launcher inspired by the classic Windows Run dialog (`Win + R`).
 
 The goal of the project is not to replace advanced launchers such as PowerToys Run, but to provide a modern, native-feeling alternative that respects the simplicity and immediacy of the original Windows experience.
 
@@ -21,25 +21,105 @@ The goal of the project is not to replace advanced launchers such as PowerToys R
 - Lightweight and fast startup
 - Execute system commands
 - Launch applications and executables
+- Execute commands with arguments
+- Built-in calculator
+- Real-time command suggestions
 - Keyboard-focused workflow
 - Automatic input focus on startup
+- Native WinUI 3 experience
+- Support for Windows Shell shortcuts
 - Minimal design with familiar behavior
 
-### Planned Features
+### Supported Commands
+
+#### System Tools
+
+```text
+notepad
+calc
+cmd
+powershell
+wt
+explorer
+regedit
+taskmgr
+control
+msconfig
+```
+
+#### Administrative Tools
+
+```text
+services.msc
+devmgmt.msc
+diskmgmt.msc
+compmgmt.msc
+eventvwr.msc
+gpedit.msc
+```
+
+#### Shell Shortcuts
+
+```text
+shell:startup
+shell:downloads
+shell:documents
+shell:desktop
+```
+
+#### Control Panel / Settings
+
+```text
+ms-settings:
+appwiz.cpl
+ncpa.cpl
+sysdm.cpl
+```
+
+### Calculator
+
+QuickRun can evaluate mathematical expressions directly from the input box.
+
+Examples:
+
+```text
+2+2
+10*5
+100/4
+(12+3)*2
+```
+
+Results are displayed instantly in the launcher.
+
+### Command Arguments
+
+Applications can be started with command-line arguments.
+
+Examples:
+
+```text
+notepad test.txt
+cmd /k dir
+powershell -NoExit
+```
+
+## Planned Features
 
 - Command history
 - Favorites and pinned commands
-- Windows system shortcuts
-- Improved command suggestions
+- Installed applications discovery
+- Better autocomplete ranking
+- URL handling
+- Web search integration
+- Global hotkey support
 - Custom themes
 - Plugin architecture
-- Enhanced search experience
 
-## Why Run11?
+## Why QuickRun?
 
 The Windows Run dialog has been part of Windows for decades and remains one of the fastest ways to launch commands and applications.
 
-Run11 modernizes this experience while preserving its original philosophy:
+QuickRun modernizes this experience while preserving its original philosophy:
 
 - Fast
 - Simple
@@ -78,23 +158,39 @@ Open the solution in Visual Studio and build the project.
 Run11 is built using:
 
 - C#
-- .NET
+- .NET 8
 - WinUI 3
 - Windows App SDK
 - Fluent Design principles
 
 ## Roadmap
 
+- [x] Modern WinUI 3 interface
+- [x] Command execution
+- [x] AutoSuggest support
+- [x] Built-in calculator
+- [x] Command argument support
 - [ ] Command history
-- [ ] Autocomplete
+- [ ] Installed applications discovery
 - [ ] Favorites
+- [ ] URL support
 - [ ] Search integration
-- [ ] Script execution
+- [ ] Global hotkey
 - [ ] Plugin support
 - [ ] Fluent Design improvements
 
 ## Version
-- Version 0.5 (Alpha)
+
+### Version 0.7 Alpha
+
+#### What's New
+
+- Added built-in calculator support
+- Added command argument support
+- Improved command execution logic
+- Improved autocomplete experience
+- Added support for Windows Shell folders
+- Various bug fixes and stability improvements
 
 ## Acknowledgments
 
