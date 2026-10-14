@@ -2,7 +2,7 @@
 
 A modern reimagining of the classic Windows Run dialog.
 
-Run11 brings the familiar Windows "Run" experience into the Windows 11 era with a clean interface, modern design language, and a lightweight user experience.
+QuickRun brings the familiar Windows "Run" experience into the Windows 11 era with a clean interface, modern design language, and a lightweight user experience.
 
 ![Platform](https://img.shields.io/badge/platform-Windows-blue)
 ![Status](https://img.shields.io/badge/status-Active%20Development-orange)
