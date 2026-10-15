@@ -6,6 +6,7 @@ QuickRun brings the familiar Windows "Run" experience into the Windows 11 era wi
 
 ![Platform](https://img.shields.io/badge/platform-Windows-blue)
 ![Status](https://img.shields.io/badge/status-Active%20Development-orange)
+![Version](https://img.shields.io/badge/version-0.10.15.1036-green)
 
 ## Overview
 
@@ -13,24 +14,32 @@ QuickRun is a lightweight launcher inspired by the classic Windows Run dialog (`
 
 The goal of the project is not to replace advanced launchers such as PowerToys Run, but to provide a modern, native-feeling alternative that respects the simplicity and immediacy of the original Windows experience.
 
+Unlike the traditional Run dialog, QuickRun provides intelligent command suggestions, application discovery, Microsoft Store app support, built-in calculations, URL launching, and a modern WinUI 3 interface.
+
 ## Features
 
 ### Current Features
 
 - Modern Windows 11 inspired user interface
 - Lightweight and fast startup
-- Execute system commands
-- Launch applications and executables
-- Execute commands with arguments
-- Built-in calculator
+- Native WinUI 3 implementation
+- Execute Windows system commands
+- Launch desktop applications and executables
+- Launch Microsoft Store applications
+- Automatic installed application discovery
 - Real-time command suggestions
+- Built-in calculator
+- Support for command-line arguments
+- URL launching support
 - Keyboard-focused workflow
 - Automatic input focus on startup
-- Native WinUI 3 experience
-- Support for Windows Shell shortcuts
+- Windows Shell shortcut support
+- Custom application icon
 - Minimal design with familiar behavior
 
-### Supported Commands
+### System Commands
+
+QuickRun includes support for commonly used Windows tools and utilities.
 
 #### System Tools
 
@@ -67,7 +76,7 @@ shell:documents
 shell:desktop
 ```
 
-#### Control Panel / Settings
+#### Windows Settings & Control Panel
 
 ```text
 ms-settings:
@@ -76,9 +85,29 @@ ncpa.cpl
 sysdm.cpl
 ```
 
+### Installed Application Discovery
+
+QuickRun automatically scans the Windows Start Menu and installed packages to discover available applications.
+
+Examples:
+
+```text
+Steam
+Discord
+Spotify
+Google Chrome
+Visual Studio
+Windows Terminal
+Photos
+Microsoft Store
+WhatsApp
+```
+
+Applications can be launched directly from the search box without additional configuration.
+
 ### Calculator
 
-QuickRun can evaluate mathematical expressions directly from the input box.
+QuickRun can evaluate mathematical expressions directly from the search box.
 
 Examples:
 
@@ -89,11 +118,11 @@ Examples:
 (12+3)*2
 ```
 
-Results are displayed instantly in the launcher.
+The result is displayed instantly inside the application.
 
 ### Command Arguments
 
-Applications can be started with command-line arguments.
+Applications can be launched with command-line arguments.
 
 Examples:
 
@@ -103,21 +132,21 @@ cmd /k dir
 powershell -NoExit
 ```
 
-## Planned Features
+### URL Support
 
-- Command history
-- Favorites and pinned commands
-- Installed applications discovery
-- Better autocomplete ranking
-- URL handling
-- Web search integration
-- Global hotkey support
-- Custom themes
-- Plugin architecture
+QuickRun can open URLs directly using the system's default browser.
+
+Examples:
+
+```text
+https://github.com
+https://microsoft.com
+https://learn.microsoft.com
+```
 
 ## Why QuickRun?
 
-The Windows Run dialog has been part of Windows for decades and remains one of the fastest ways to launch commands and applications.
+The Windows Run dialog has been a core part of Windows for decades and remains one of the fastest ways to launch commands and applications.
 
 QuickRun modernizes this experience while preserving its original philosophy:
 
@@ -126,31 +155,35 @@ QuickRun modernizes this experience while preserving its original philosophy:
 - Familiar
 - Lightweight
 
-Unlike feature-heavy launchers, QuickRun focuses on doing a few things exceptionally well.
+Unlike feature-heavy launchers, QuickRun aims to deliver the most commonly used functionality with minimal overhead and maximum responsiveness.
 
 ## Screenshots
 
-![QuickRun Main Window](App1/docs/screenshot.png)
+### Main Window
 
+![QuickRun Main Window](App1/docs/screenshot.png)
 
 ## Building
 
 ### Requirements
 
+- Windows 10 or Windows 11
 - Visual Studio 2022
 - .NET 8 SDK
 - Windows App SDK
 
-### Build
+### Clone
 
 ```bash
 git clone https://github.com/GiosuOffice/QuickRun.git
 cd QuickRun
 ```
 
+### Build
+
 Open the solution in Visual Studio and build the project.
 
-## Technology
+## Technology Stack
 
 QuickRun is built using:
 
@@ -162,33 +195,73 @@ QuickRun is built using:
 
 ## Roadmap
 
+### Completed
+
 - [x] Modern WinUI 3 interface
 - [x] Command execution
 - [x] AutoSuggest support
 - [x] Built-in calculator
 - [x] Command argument support
+- [x] Installed application discovery
+- [x] Microsoft Store application support
+- [x] URL support
+- [x] Custom application icon
+- [x] Windows Shell shortcuts
+
+### Planned
+
 - [ ] Command history
-- [ ] Installed applications discovery
 - [ ] Favorites
-- [x] URL support (pre alpha)
-- [ ] Search integration
-- [ ] Global hotkey
-- [ ] Plugin support
-- [ ] Fluent Design improvements
+- [ ] Smart usage-based ranking
+- [ ] Web search integration
+- [ ] Global hotkey support
+- [ ] Custom themes
+- [ ] Plugin architecture
+- [ ] Fluent Design enhancements
+- [ ] Portable mode
 
 ## Version
 
-### Version 0.7 Alpha
+### Current Version
 
-#### What's New
+**0.10.15.1036**
 
-- Added built-in calculator support
+### What's New
+
+#### Version 0.10.15.1036
+
+- Rebranded from **Run11** to **QuickRun**
+- Added automatic installed application discovery
+- Added Microsoft Store application support
+- Added desktop application discovery through Start Menu shortcuts
 - Added command argument support
-- Improved command execution logic
-- Improved autocomplete experience
-- Added support for Windows Shell folders
+- Added built-in calculator functionality
+- Added URL launching support
+- Improved AutoSuggest behavior
+- Improved command execution engine
+- Improved application search experience
+- Added support for launching desktop and Store apps from a single search box
+- Added custom QuickRun branding and icon
 - Various bug fixes and stability improvements
+
+## Project Status
+
+QuickRun is currently under active development.
+
+The project is already fully usable for daily workflows and continues to evolve with new functionality focused on speed, simplicity, and native Windows integration.
+
+## License
+
+This project is currently distributed without a specified license.
+
+Consider adding an open-source license if you plan to accept contributions from the community.
 
 ## Acknowledgments
 
-Inspired by the classic Windows Run dialog and modern Windows 11 design guidelines.
+Inspired by:
+
+- The classic Windows Run dialog (`Win + R`)
+- Windows 11 Fluent Design
+- Modern launcher -
+
+Made with ❤️ using WinUI 3.
