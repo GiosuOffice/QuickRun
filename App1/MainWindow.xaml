@@ -43,6 +43,7 @@
             x:Name="Run_Button"
             Click="Run_Button_Click"
             Content="OK"
+            Style="{StaticResource AccentButtonStyle}"
             VerticalAlignment="Bottom"
             HorizontalAlignment="Right"
             Margin="0,0,90,10"/>
