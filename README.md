@@ -161,7 +161,7 @@ Unlike feature-heavy launchers, QuickRun aims to deliver the most commonly used 
 
 ### Main Window
 
-![QuickRun Main Window](docs/screenshot.png)
+![QuickRun Main Window](App1/docs/screenshot.png)
 
 ## Building
 
