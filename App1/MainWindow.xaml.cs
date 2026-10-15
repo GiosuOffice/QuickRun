@@ -35,6 +35,7 @@ namespace App1
             InitializeComponent();
             AppWindow.Resize(new Windows.Graphics.SizeInt32(400, 210));
             PositionWindow();
+            LoadStartMenuApps();
 
             if (AppWindow.Presenter is OverlappedPresenter presenter)
             {
@@ -86,6 +87,81 @@ namespace App1
             "sysdm.cpl"
         };
 
+        private List<QuickRun.StartMenuApp> InstalledApps = new List<QuickRun.StartMenuApp>();
+
+        private void LoadStartMenuApps()
+        {
+            string[] startMenuPaths =
+            {
+                Environment.GetFolderPath(Environment.SpecialFolder.StartMenu),
+                Environment.GetFolderPath(Environment.SpecialFolder.CommonStartMenu)
+            };
+
+            foreach (string folder in startMenuPaths.Distinct())
+            {
+                Debug.WriteLine($"Scansione: {folder}");
+
+                foreach (string shortcut in EnumerateShortcutsSafely(folder))
+                {
+                    InstalledApps.Add(new QuickRun.StartMenuApp
+                    {
+                        Name = Path.GetFileNameWithoutExtension(shortcut),
+                        Path = shortcut
+                    });
+                }
+            }
+        }
+
+        private static IEnumerable<string> EnumerateShortcutsSafely(string folder)
+        {
+            IEnumerable<string> files;
+
+            try
+            {
+                files = Directory.EnumerateFiles(folder, "*.lnk", SearchOption.TopDirectoryOnly);
+            }
+            catch (UnauthorizedAccessException ex)
+            {
+                Debug.WriteLine($"Accesso negato: {folder} - {ex.Message}");
+                yield break;
+            }
+            catch (IOException ex)
+            {
+                Debug.WriteLine($"Errore I/O: {folder} - {ex.Message}");
+                yield break;
+            }
+
+            foreach (string file in files)
+            {
+                yield return file;
+            }
+
+            IEnumerable<string> directories;
+
+            try
+            {
+                directories = Directory.EnumerateDirectories(folder);
+            }
+            catch (UnauthorizedAccessException ex)
+            {
+                Debug.WriteLine($"Accesso negato alle sottocartelle: {folder} - {ex.Message}");
+                yield break;
+            }
+            catch (IOException ex)
+            {
+                Debug.WriteLine($"Errore I/O nelle sottocartelle: {folder} - {ex.Message}");
+                yield break;
+            }
+
+            foreach (string directory in directories)
+            {
+                foreach (string shortcut in EnumerateShortcutsSafely(directory))
+                {
+                    yield return shortcut;
+                }
+            }
+        }
+
         // Handle text change and present suitable items
         private void AutoSuggestBox_TextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)
         {
@@ -95,12 +171,18 @@ namespace App1
             {
                 var suitableItems = new List<string>();
                 var splitText = sender.Text.ToLower().Split(" ");
-                foreach (var cmd in Commands)
+                var allCommands = Commands
+                    .Concat(InstalledApps.Select(a => a.Name))
+                    .Distinct()
+                    .ToList();
+
+                foreach (var cmd in allCommands)
                 {
                     var found = splitText.All((key) =>
                     {
                         return cmd.ToLower().Contains(key);
                     });
+
                     if (found)
                     {
                         suitableItems.Add(cmd);
@@ -155,6 +237,20 @@ namespace App1
 
         private void ExecuteCommand()
         {
+            var app = InstalledApps.FirstOrDefault(x => x.Name.Equals(selectedCommand, StringComparison.OrdinalIgnoreCase));
+
+            if (app != null)
+            {
+                Process.Start(new ProcessStartInfo
+                {
+                    FileName = app.Path,
+                    UseShellExecute = true
+                });
+
+                Close();
+                return;
+            }
+
             if (IsMathExpression(selectedCommand))
             {
                 try
@@ -213,47 +309,6 @@ namespace App1
             ExecuteCommand();
         }
 
-        private void TestCommands()
-        {
-            string[] commands =
-            {
-                "notepad",
-                "calc",
-                "cmd",
-                "regedit",
-                "taskmgr",
-                "control",
-                "services.msc",
-                "devmgmt.msc",
-                "diskmgmt.msc",
-                "shell:startup",
-                "shell:downloads",
-                "ms-settings:",
-                "%temp%",
-                "C:\\Windows"
-            };
-
-            foreach (string command in commands)
-            {
-                try
-                {
-                    Process.Start(new ProcessStartInfo
-                    {
-                        FileName = Environment
-                            .ExpandEnvironmentVariables(command),
-                        UseShellExecute = true
-                    });
-
-                    Debug.WriteLine($"OK: {command}");
-                }
-                catch (Exception ex)
-                {
-                    Debug.WriteLine($"ERROR: {command}");
-                    Debug.WriteLine(ex.Message);
-                }
-            }
-        }
-
         private void Grid_Loaded(object sender, RoutedEventArgs e)
         {
             AutoSuggestBox1.Focus(FocusState.Programmatic);
@@ -289,5 +344,4 @@ namespace App1
             appWindow.Move(new Windows.Graphics.PointInt32(x, y));
         }
     }
-
 }
