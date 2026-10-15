@@ -14,8 +14,10 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.Management.Deployment;
 using Windows.System;
 using Windows.UI.Popups;
 using WinRT.Interop;
@@ -36,6 +38,9 @@ namespace App1
             AppWindow.Resize(new Windows.Graphics.SizeInt32(400, 210));
             PositionWindow();
             LoadStartMenuApps();
+
+            _ = LoadStoreApps();
+
 
             if (AppWindow.Presenter is OverlappedPresenter presenter)
             {
@@ -88,6 +93,35 @@ namespace App1
         };
 
         private List<QuickRun.StartMenuApp> InstalledApps = new List<QuickRun.StartMenuApp>();
+
+        private async Task LoadStoreApps()
+        {
+            var pm = new PackageManager();
+
+            foreach (var package in pm.FindPackagesForUser(""))
+            {
+                try
+                {
+                    var entries = await package.GetAppListEntriesAsync();
+
+                    foreach (var entry in entries)
+                    {
+                        InstalledApps.Add(new QuickRun.StartMenuApp
+                        {
+                            Name = entry.DisplayInfo.DisplayName,
+                            IsStoreApp = true,
+                            AppUserModelId = entry.AppUserModelId
+                        });
+                    }
+                }
+                catch
+                {
+                }
+            }
+
+            Debug.WriteLine(
+                $"Store Apps: {InstalledApps.Count(x => x.IsStoreApp)}");
+        }
 
         private void LoadStartMenuApps()
         {
@@ -241,11 +275,23 @@ namespace App1
 
             if (app != null)
             {
-                Process.Start(new ProcessStartInfo
+                if (app.IsStoreApp)
                 {
-                    FileName = app.Path,
-                    UseShellExecute = true
-                });
+                    Process.Start(new ProcessStartInfo
+                    {
+                        FileName = "explorer.exe",
+                        Arguments = $"shell:AppsFolder\\{app.AppUserModelId}",
+                        UseShellExecute = true
+                    });
+                }
+                else
+                {
+                    Process.Start(new ProcessStartInfo
+                    {
+                        FileName = app.Path,
+                        UseShellExecute = true
+                    });
+                }
 
                 Close();
                 return;
